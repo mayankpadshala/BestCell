@@ -7,40 +7,39 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
+import com.example.android.bestcell.adapter.CustomGridAdapter;
+import com.example.android.bestcell.models.Platform;
+
+import org.parceler.Parcels;
+
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     GridView simpleGrid;
-    int logos[] = {R.drawable.ic_android_black_24dp, R.drawable.ic_android_black_24dp,
-            R.drawable.ic_android_black_24dp};
-
-    String text[] = {"Android", "Iphone", "Windows"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        simpleGrid = (GridView) findViewById(R.id.gridView); // init GridView
+        simpleGrid = findViewById(R.id.gridView); // init GridView
         // Create an object of CustomAdapter and set Adapter to GirdView
-        CustomGridAdapter customAdapter = new CustomGridAdapter(getApplicationContext(), logos, text);
+        final List<Platform> platforms = Platform.getData();
+        CustomGridAdapter customAdapter = new CustomGridAdapter(getApplicationContext(), platforms);
         simpleGrid.setAdapter(customAdapter);
         // implement setOnItemClickListener event on GridView
         simpleGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // set an Intent to Another Activity
-                if (position == 0) {
-                    Intent intent = new Intent(MainActivity.this, AndroidPhoneActivity.class);
+                if(position == 1) {
+                    Intent intent = new Intent(MainActivity.this, DeviceModelListActivity.class);
+                    intent.putExtra("manufacturer", Parcels.wrap(platforms.get(position).getDeviceList().get(0)));
                     startActivity(intent); // start Intent
-                }
-
-                if (position == 1) {
-                    Intent intent = new Intent(MainActivity.this, IphonePhoneActivity.class);
-                    startActivity(intent); // start Intent
-                }
-
-                if (position == 2) {
-                    Intent intent = new Intent(MainActivity.this, WindowsPhoneActivity.class);
+                } else {
+                    Intent intent = new Intent(MainActivity.this, DeviceListActivity.class);
+                    intent.putExtra("platform", Parcels.wrap(platforms.get(position)));
                     startActivity(intent); // start Intent
                 }
             }

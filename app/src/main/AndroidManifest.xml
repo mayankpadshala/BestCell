@@ -16,16 +16,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".AndroidPhoneActivity"
-            android:label="Select Android Brand" />
-        <activity
-            android:name=".IphonePhoneActivity"
-            android:label="Select Iphone" />
-        <activity
-            android:name=".WindowsPhoneActivity"
-            android:label="Select Windows Phone" />
-        <activity android:name=".DetailsActivity"></activity>
+        <activity android:name=".DeviceListActivity"
+            android:label="Select Brand"/>
+        <activity android:name=".DeviceModelListActivity"
+            android:label="Select Model"/>
+        <activity android:name=".DeviceInfoActivity"
+            android:label="Details"/>
     </application>
 
 </manifest>
