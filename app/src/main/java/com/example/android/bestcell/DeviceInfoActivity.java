@@ -1,9 +1,12 @@
 package com.example.android.bestcell;
 
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
 
+import com.example.android.bestcell.adapter.FragmentTabAdapter;
 import com.example.android.bestcell.models.Manufacturer;
 import com.example.android.bestcell.models.Model;
 
@@ -18,7 +21,15 @@ public class DeviceInfoActivity extends AppCompatActivity {
 
         Model model = Parcels.unwrap(getIntent().getParcelableExtra("model"));
 
-        TextView deviceName = findViewById(R.id.name);
-        deviceName.setText(model.getName());
+        getSupportActionBar().setTitle(model.getName());
+
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        FragmentTabAdapter adapter = new FragmentTabAdapter(getSupportFragmentManager());
+        adapter.addFragment(new ImagesFragment(), "Images");
+        adapter.addFragment(new SpecFragment(), "Specification");
+        adapter.addFragment(new PriceFragment(), "Price Quotes");
+        viewPager.setAdapter(adapter);
+        tabLayout.setupWithViewPager(viewPager);
     }
 }
